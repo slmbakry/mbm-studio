@@ -65,7 +65,7 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
   "ورقة وقلم رصاص"). Brands the owner creates or edits in the page are stored separately
   and override a preset with the same id. To make a brand appear everywhere, add or update
   it in `PRESETS`.
-- Logos: `builtin:light` and `builtin:dark` are Waraqak's (base64 in `LOGO`). Other brands
+- Logos: `builtin:light` and `builtin:dark` are Waraqak's (base64 in `LOGO`); other built-in logos are in `LOGO_EXTRA`, named `builtin:<key>`. Other brands
   use uploaded images. With no logo, the brand name is drawn as text; with only a light
   logo, it sits on a white plate on dark backgrounds.
 
@@ -74,7 +74,7 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
 | Brand | Status |
 |---|---|
 | ورقك | Complete, with logo |
-| أصول ريزيدنس | Colours and font (Cairo) from the Osool design system artifact; no logo file yet |
+| أصول ريزيدنس | Colours and font (Cairo) from the Osool design system artifact. Logo from the owner's Illustrator file (white outlined "OSOOL Residence" with the keyhole and key), converted to two transparent PNGs: dark ink for light grounds, white for dark grounds (`builtin:osool-light`, `builtin:osool-dark`) |
 | ورقة وقلم رصاص | Poetry page. Temporary identity (graphite, pencil yellow, cream paper, Aref Ruqaa); the owner is finishing the real identity in another chat |
 
 ## Testing
