@@ -61,8 +61,8 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
   collage, and three classic ones). `PDIRS`: 6 poetry directions (notebook, classic,
   pencil, single, crumpled, night). Each draws differently when `g.v` is 1 (the
   "alternate composition" button). Variations pick six direction and composition pairs.
-- `PRESETS`: brands built into the code (Waraqak with its logo, Osool Residence, and
-  "ورقة وقلم رصاص"). Brands the owner creates or edits in the page are stored separately
+- `PRESETS`: brands built into the code (Waraqak with its logo, Osool Residence, Osool Rental,
+  and "ورقة وقلم رصاص"). Brands the owner creates or edits in the page are stored separately
   and override a preset with the same id. To make a brand appear everywhere, add or update
   it in `PRESETS`.
 - Logos: `builtin:light` and `builtin:dark` are Waraqak's (base64 in `LOGO`); other built-in logos are in `LOGO_EXTRA`, named `builtin:<key>`. Other brands
@@ -75,6 +75,7 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
 |---|---|
 | ورقك | Complete, with logo |
 | أصول ريزيدنس | Colours and font (Cairo) from the Osool design system artifact. Logo from the owner's Illustrator file (white outlined "OSOOL Residence" with the keyhole and key), converted to two transparent PNGs: dark ink for light grounds, white for dark grounds (`builtin:osool-light`, `builtin:osool-dark`) |
+| أصول للإيجارات | Separate company from Osool Residence. Black `#1C1C1A` and gold `#B08D57`, highlight `#D9BE8C`, paper `#FAF8F4`; headings Amiri, text Noto Naskh Arabic; handle osoolrental.com; no tagline. Logo is the English-only "OSOOL / RENTAL" serif wordmark with gold rules (Latin Modern Roman as paths), as two transparent PNGs (`builtin:osool-rental-light`, `builtin:osool-rental-dark`) |
 | ورقة وقلم رصاص | Poetry page. Temporary identity (graphite, pencil yellow, cream paper, Aref Ruqaa); the owner is finishing the real identity in another chat |
 
 ## Testing
