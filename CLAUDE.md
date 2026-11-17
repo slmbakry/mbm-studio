@@ -81,6 +81,28 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
   use uploaded images. With no logo, the brand name is drawn as text; with only a light
   logo, it sits on a white plate on dark backgrounds.
 
+## Video (step ٥)
+
+Animated version of the current design, 5, 8, 10 or 15 seconds, 30 fps, at the format's
+size. Not offered for cover formats (those with `safe`).
+
+- Motion: `opts.anim = {t, D, style}`. `paint()` zooms the whole frame from 1 to 1.035
+  over the clip. `place()` calls `animApply()`, which delays each element by its order in
+  `AORD` (image, eyebrow/ptitle, title/verses, rule/lead, poet/body, cta, logo, url) and
+  animates it in over 0.8 s. Styles: `rise` (fade up), `write` (right-to-left wipe),
+  `pop` (scale with overshoot). Backgrounds drawn directly in a direction stay still, so
+  every direction animates without its own code. `state.vstyle`, `state.vdur`.
+- Preview: `vStart()`/`vStop()` loop the clip in the main canvas, with the music.
+- Export, `vExport()`: first `vEncodeWC()` (WebCodecs H.264, plus AAC when music is added,
+  muxed by the embedded `mp4-muxer` 5.2.2, MIT, in its own script tag). Faster than real
+  time and frame-exact. If H.264 or AAC encoding is missing, it falls back to
+  `vEncodeMR()`: `MediaRecorder` on `cv.captureStream(30)` in real time, preferring MP4
+  with H.264 and AAC. Linux Chrome has no AAC, so there the music comes out as Opus; on
+  Windows, Mac, Android and iPhone the browsers have AAC. WebM is the last resort and the
+  page warns that Instagram may refuse it.
+- Music: an uploaded audio file, decoded with Web Audio, starts at 0, is cut to the clip
+  length and fades out over the last 1.2 s (`vMixAudio()`). Kept in memory only.
+
 ## Brands
 
 | Brand | Status |
