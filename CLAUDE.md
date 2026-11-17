@@ -40,7 +40,19 @@ updated from here.
 
 One self-contained file: CSS, markup and one script. No build step; edit it directly.
 
-- `PLATFORMS`: platforms and sizes (1080x1080, 1080x1350, 1080x1920, 1200x630/627).
+- `PLATFORMS`: 10 platforms (Facebook, Instagram, LinkedIn, TikTok, YouTube, X, Threads,
+  WhatsApp, Snapchat, Pinterest). Sizes include 1080x1080, 1080x1350, 1080x1440, 1080x1920,
+  1000x1500, 1200x630/627, 1280x720, 1600x900.
+- Covers: a format may have `safe:{x,y,w,h}` (Facebook page cover 1640x624, LinkedIn
+  profile banner 1584x396, YouTube channel banner 2560x1440). `paint()` then draws the
+  design in an offscreen canvas of the safe size, places it at the safe rect, stretches its
+  left and right edge columns sideways and fills above and below with the average colour of
+  its top and bottom rows. Hits are shifted by the safe offset; `place()` uses `opts.FW`/`FH`
+  (full size) for drag offsets so dragging follows the pointer. `opts.FW` is set only in
+  this mode; a design can check it (the pencil poem shortens its pencil so it does not
+  touch the edge and stretch). Safe rects follow each platform's crop: YouTube's
+  all-devices area is the centre 1546x423 (the design uses 846x423 inside it); LinkedIn's
+  is on the right, away from the profile photo.
 - Brand tokens: the designs were drawn for Waraqak's colours, so every colour in the
   drawing code is `PAL[i]`, computed by `retheme()` from the current brand's four colours
   (`primary` dark, `accent`, `highlight`, `paper`) through `RECIPES` (each colour is a base
