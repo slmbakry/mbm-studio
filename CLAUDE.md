@@ -88,7 +88,7 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
 | ورقك | Complete, with logo |
 | أصول ريزيدنس | Colours and font (Cairo) from the Osool design system artifact. Logo from the owner's Illustrator file (white outlined "OSOOL Residence" with the keyhole and key), converted to two transparent PNGs: dark ink for light grounds, white for dark grounds (`builtin:osool-light`, `builtin:osool-dark`) |
 | أصول للإيجارات | Separate company from Osool Residence. Black `#1C1C1A` and gold `#B08D57`, highlight `#D9BE8C`, paper `#FAF8F4`; headings Amiri, text Noto Naskh Arabic; handle osoolrental.com; no tagline. Logo is the English-only "OSOOL / RENTAL" serif wordmark with gold rules (Latin Modern Roman as paths), as two transparent PNGs (`builtin:osool-rental-light`, `builtin:osool-rental-dark`) |
-| ورقة وقلم رصاص | Poetry page. Temporary identity (graphite, pencil yellow, cream paper, Aref Ruqaa); the owner is finishing the real identity in another chat |
+| ورقة وقلم رصاص | Poetry page, tagline "شعر بالعامية المصرية". Graphite `#2B2F33`, blue `#2E6F9E`, pencil yellow `#F2C14E`, paper `#F8F6F0`; headings Aref Ruqaa, text Readex Pro. Logo is a lined sheet with a pencil beside the name in Ruqaa, as two transparent PNGs (`builtin:paper-pencil-light`, `builtin:paper-pencil-dark`), 900px wide, 256 colours |
 
 ## Testing
 
