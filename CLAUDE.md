@@ -69,8 +69,11 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
   contains `*`), `g.logo()`, `g.url()` (the brand's handle). Each element is drawn through
   `g.place(key, rect, fn)`, which applies the owner's drag, size and colour edits and
   records the hit area for the editor.
-- `DIRS`: 11 ad directions (editorial, swiss, luxury, depth, glass, concept, cinema,
-  collage, and three classic ones). `PDIRS`: 6 poetry directions (notebook, classic,
+- `DIRS`: 15 ad directions (editorial, swiss, luxury, depth, glass, concept, cinema,
+  collage, poster, split, minimal, offer, and three classic ones). A direction may have
+  `dark(v)` saying whether its ground is dark (used for the photo tint); otherwise the old
+  per-id rule in `paint()` decides. `offer` draws the eyebrow inside a gold burst badge
+  itself (through `g.place('eyebrow', …)`), not in the stack. `PDIRS`: 6 poetry directions (notebook, classic,
   pencil, single, crumpled, night). Each draws differently when `g.v` is 1 (the
   "alternate composition" button). Variations pick six direction and composition pairs.
 - `PRESETS`: brands built into the code (Waraqak with its logo, Osool Residence, Osool Rental,
@@ -81,6 +84,26 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
   use uploaded images. With no logo, the brand name is drawn as text; with only a light
   logo, it sits on a white plate on dark backgrounds.
 
+## Saved designs ("تصميماتي", top of the panel)
+
+`designs` holds saved designs by id (`d` + base-36 time): `{name, createdAt, updatedAt,
+thumb, st, img}`. `thumb` is a 360px JPEG data URL; `st` copies the `DKEYS` fields of
+`state` (brand, size, direction, texts, edits, variants, video settings); `img` is the
+uploaded photo, scaled to 1600px at most (PNG in free mode, JPEG otherwise): an artifact
+asset inside Claude, a data URL elsewhere. `userImgRef` remembers the stored copy of the
+current photo so saving again does not upload it again. Stored in `localStorage`
+(`mbm-designs`) and, inside Claude, in the `designs` collection of the database, synced
+like brands. If the browser storage is full the design is saved without its photo, and
+the page says so. `state.openDesign` is the design being edited: "حفظ التعديلات" updates it,
+"حفظ كنسخة جديدة" makes a copy, "تصميم جديد" detaches. Delete needs a second tap.
+
+## All sizes in one file (step ٤)
+
+`exportAll()` renders the current design at every format of the ticked platforms (covers
+included), as PNGs, and packs them with `makeZip()`: a small stored (uncompressed) ZIP
+writer with CRC-32 and the UTF-8 name flag, one folder per platform, files named with the
+Arabic format name and size. The current platform and size are restored afterwards.
+
 ## Video (step ٥)
 
 Animated version of the current design, 5, 8, 10 or 15 seconds, 30 fps, at the format's
@@ -90,7 +113,8 @@ size. Not offered for cover formats (those with `safe`).
   over the clip. `place()` calls `animApply()`, which delays each element by its order in
   `AORD` (image, eyebrow/ptitle, title/verses, rule/lead, poet/body, cta, logo, url) and
   animates it in over 0.8 s. Styles: `rise` (fade up), `write` (right-to-left wipe),
-  `pop` (scale with overshoot). Backgrounds drawn directly in a direction stay still, so
+  `pop` (scale with overshoot), `slide` (in from the right), `zoom` (from 1.35 down to
+  1), `drop` (from above with a bounce). Backgrounds drawn directly in a direction stay still, so
   every direction animates without its own code. `state.vstyle`, `state.vdur`.
 - Preview: `vStart()`/`vStop()` loop the clip in the main canvas, with the music.
 - Export, `vExport()`: first `vEncodeWC()` (WebCodecs H.264, plus AAC when music is added,
