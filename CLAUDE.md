@@ -73,8 +73,9 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
   collage, poster, split, minimal, offer, and three classic ones). A direction may have
   `dark(v)` saying whether its ground is dark (used for the photo tint); otherwise the old
   per-id rule in `paint()` decides. `offer` draws the eyebrow inside a gold burst badge
-  itself (through `g.place('eyebrow', …)`), not in the stack. `PDIRS`: 6 poetry directions (notebook, classic,
-  pencil, single, crumpled, night). Each draws differently when `g.v` is 1 (the
+  itself (through `g.place('eyebrow', …)`), not in the stack. `PDIRS`: 10 poetry directions (notebook, classic,
+  pencil, ornate, quote, sticky, dusk, single, crumpled, night). `sticky` rotates the verses with
+  the note by pushing a save/rotate and a restore into `g.q` around `g.poem()`. Each draws differently when `g.v` is 1 (the
   "alternate composition" button). Variations pick six direction and composition pairs.
 - `PRESETS`: brands built into the code (Waraqak with its logo, Osool Residence, Osool Rental,
   and "ورقة وقلم رصاص"). Brands the owner creates or edits in the page are stored separately
@@ -83,6 +84,24 @@ One self-contained file: CSS, markup and one script. No build step; edit it dire
 - Logos: `builtin:light` and `builtin:dark` are Waraqak's (base64 in `LOGO`); other built-in logos are in `LOGO_EXTRA`, named `builtin:<key>`. Other brands
   use uploaded images. With no logo, the brand name is drawn as text; with only a light
   logo, it sits on a white plate on dark backgrounds.
+
+## QR code
+
+`state.qr` (field in step ٣). `qrLayer()` runs after the queue in `paint()` and draws the
+code through `g.place('qr', …)`, so it can be dragged, resized and recoloured (a light
+colour is ignored so it stays scannable). Default spot: bottom-left, above the usual
+footer. Encoded with the embedded `qrcode-generator` 1.4.4 (MIT, own script tag), level M,
+UTF-8; the matrix is cached per text. Checked by decoding renders with OpenCV.
+
+## Slides (step ٣, "بوست شرائح")
+
+`state.slides`: the slides after the cover, separated by a line of `---`. `slideBlocks()`
+splits them; `state.slideIdx` (not saved, reset on load) is the slide shown, and
+`content()` builds it: ads take the first line as title, the rest as lead, a counter
+"٢ / ٤" as eyebrow, and the CTA only on the last slide; poems take the block as verses and
+the poet only on the last slide. The cover is the normal content. "تنزيل الشرائح" packs
+every slide as PNG with `makeZip()`. In video, `state.vslides` plays each slide for
+`SLIDE_SEC` (3) seconds with its own entrance (`vFrame()`), 60 seconds at most.
 
 ## Saved designs ("تصميماتي", top of the panel)
 
@@ -124,6 +143,13 @@ size. Not offered for cover formats (those with `safe`).
   with H.264 and AAC. Linux Chrome has no AAC, so there the music comes out as Opus; on
   Windows, Mac, Android and iPhone the browsers have AAC. WebM is the last resort and the
   page warns that Instagram may refuse it.
+- Footage: the photo field also takes a video (`takeVideo()`). It becomes `userImg` (a
+  `<video>`), so the background and free modes both work; `userVid` keeps it. Its sound is
+  decoded once into `vVidAudio` (files under 150 MB) and used when `state.vkeep` is on and
+  no music is added. Duration option 0, "طول المقطع", uses the clip's length (60 s at most).
+  WebCodecs export seeks the video to each frame (`vSeek()`), so it is exact but slower;
+  the real-time fallback plays it. Saved designs keep a still frame, not the video.
+- `vTotal()` is the clip length, `vFrame(t, exp)` draws one frame (slides, motion, video).
 - Music: an uploaded audio file, decoded with Web Audio, starts at 0, is cut to the clip
   length and fades out over the last 1.2 s (`vMixAudio()`). Kept in memory only.
 
